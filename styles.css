@@ -321,7 +321,7 @@ h1 {
 .selector-buttons {
   position: relative;
   display: flex;
-  background-color: var(--bg-secondary);
+  background-color: rgba(0, 0, 0, 0.15);
   border-radius: 20px;
   overflow: hidden;
   gap: 10px;

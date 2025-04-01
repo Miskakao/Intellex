@@ -232,7 +232,7 @@ function generateQuizPrompt(content, quizType, questionCount, difficulty, langua
 
             Text: ${content}`;
     } else if (quizType === 'mixed') {
-        promptTemplate = `${difficultySettings.guide} ${difficultySettings.complexity} Vygeneruj ${questionCount} ${difficulty} otázek buď s 4 možnostmi A-D, nebo s volnou odpovědí. Pro krátké a stručné odpovědi použij možnosti A-D, pro rozsáhlejší a složitější odpovědi použji vlnou odpověď, ale vždy musí být od obou typů otázek minimálně jedna.
+        promptTemplate = `${difficultySettings.guide} ${difficultySettings.complexity} Vygeneruj ${questionCount} ${difficulty} otázek buď s 4 možnostmi A-D, nebo s volnou odpovědí. Pro krátké a stručné odpovědi, které testují pevně dané kategorie či klasifikace, použij možnosti A-D. Pro rozsáhlejší a složitější odpovědi, které vyžadují znalost specifických faktů, jmen, událostí nebo interpretaci, použij volnou odpověď. Oba typy otázek by měli zastupovat minimálně 20%.
             Pro otázky s výběrem možností použij tento formát:
             Otázka: [text otázky]
             A: [možnost A]
