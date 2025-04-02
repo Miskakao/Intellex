@@ -89,6 +89,7 @@ async function extractTextFromPDF(file) {
 // Quiz generation functions
 const API_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 let generatedQuestions = [];
+let startTime;
 
 async function fetchQuizFromAI(prompt, apiKey) {
     try {
@@ -367,6 +368,15 @@ async function submitQuiz() {
         let correctAnswers = 0;
         const totalQuestions = generatedQuestions.length;
 
+        // Calculate time elapsed
+        const endTime = new Date();
+        const timeElapsed = endTime - startTime;
+
+        // Format time elapsed
+        const minutes = Math.floor(timeElapsed / 60000);
+        const seconds = ((timeElapsed % 60000) / 1000).toFixed(0);
+        const timeElapsedString = `${minutes}:${(seconds < 10 ? '0' : '')}${seconds}`;
+
         // Async evaluation for all questions
         const evaluationPromises = generatedQuestions.map(async (q, index) => {
             if (q.type === 'multiple') {
@@ -479,7 +489,7 @@ async function submitQuiz() {
 
         // Trigger the animation after a short delay
         setTimeout(() => {
-            animateProgressBar(successPercentage);
+            animateProgressBar(successPercentage, timeElapsedString);
         }, 300);
 
     } catch (error) {
@@ -494,6 +504,7 @@ function displayQuizQuestions(questions) {
     generatedQuestions = questions;
     const questionsContainer = document.getElementById('quizQuestions');
     questionsContainer.innerHTML = '';
+    startTime = new Date();
 
     questions.forEach((q, index) => {
         const questionElement = document.createElement('div');
@@ -800,7 +811,7 @@ function positionBackground(background, targetElement) {
     background.style.transform = 'translateY(-50%)';
 }
 
-function animateProgressBar(percentage) {
+function animateProgressBar(percentage, timeElapsedString) {
     const progressBar = document.getElementById('progress-bar');
     const glow = document.getElementById('glow');
     const percentageText = document.getElementById('percentage');
@@ -815,16 +826,16 @@ function animateProgressBar(percentage) {
     let barColor;
     if (percentage >= 90) {
         barColor = 'var(--correct-color)';
-        resultMessage.textContent = "Výborně!";
+        resultMessage.textContent = `${timeElapsedString}`;
     } else if (percentage >= 75) {
         barColor = '#4caf50'; // Green
-        resultMessage.textContent = "Jen tak dál!";
+        resultMessage.textContent = `${timeElapsedString}`;
     } else if (percentage >= 50) {
         barColor = 'var(--semicorrect-color)'; // Orange
-        resultMessage.textContent = "Dobrá práce!";
+        resultMessage.textContent = `${timeElapsedString}`;
     } else {
         barColor = 'var(--incorrect-color)'; // Red
-        resultMessage.textContent = "Nepřestávej procvičovat!";
+        resultMessage.textContent = `${timeElapsedString}`;
     }
 
     progressBar.style.backgroundColor = barColor;
