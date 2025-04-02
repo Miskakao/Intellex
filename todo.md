@@ -5,3 +5,4 @@
 - fix sizes of input elements
 - fix translucent elements (ei. modals) not being transaprent
 - fix incorrect questions can display semicorrect score (but the score is not added to the final score)
+- fix wrong translation of the pdf (superscript probably does not work)
