@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intellex</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+    <script src="./script.js"></script>
+</head>
+
+<body class="dark-mode">
+    <div class="background">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+    <div style="position: static;">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+
+    <div class="container">
+        <div class="controls">
+            <button class="control-button" onclick="openModal('settings')">⚙️</button>
+        </div>
+
+        <div class="modals">
+            <div class="modal" data-modal="settings">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Nastavení</h2>
+                        <button class="modal-close" onclick="closeModal('settings')">×</button>
+                    </div>
+    
+                    <div class="settings-toggle">
+                        <label for="themeSwitch">Tmavý režim</label>
+                        <label class="theme-switch">
+                            <input type="checkbox" id="themeSwitch" onchange="toggleThemeSwitch(this.checked)">
+                            <span class="theme-slider"></span>
+                        </label>
+                    </div>
+    
+                    <div class="input-group">
+                        <label for="apiKeySettings">Google AI Studio API Klíč</label>
+                        <input type="text" id="apiKeySettings" placeholder="Vložte svůj API klíč">
+                        <button onclick="saveApiKeyFromSettings()" id="saveApiKey" class="btn">Uložit API Klíč</button>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="modal error" data-modal="error">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Chyba</h2>
+                        <button class="modal-close" onclick="closeModal('error')">×</button>
+                    </div>
+                    <p id="content">Prosím zadejte platný API klíč</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="fileUploadPage" class="multi-page-container active">
+            <h1>Intellex</h1>
+
+            <div class="selector-group">
+                <span class="selector-label">Obtížnost</span>
+                <div class="selector-buttons">
+                    <button class="selector-btn selected" data-difficulty="easy">Lehká</button>
+                    <button class="selector-btn" data-difficulty="medium">Střední</button>
+                    <button class="selector-btn" data-difficulty="hard">Těžká</button>
+                </div>
+            </div>
+
+            <div class="selector-group">
+                <span class="selector-label">Typ kvízu</span>
+                <div class="selector-buttons">
+                    <button class="selector-btn selected" data-type="multiple">Výběr A-D</button>
+                    <button class="selector-btn" data-type="open">Volné odpovědi</button>
+                    <button class="selector-btn" data-type="mixed">Kombinované</button>
+                </div>
+            </div>
+
+            <div class="file-input-wrapper">
+                <label class="file-input-label">
+                    <div class="file-input-icon">📄</div>
+                    <div class="file-input-text">Přetáhněte sem PDF soubor nebo klikněte pro výběr</div>
+                    <div id="fileName" class="file-name">Soubor nenahrán</div>
+                    <input type="file" id="documentUpload" accept=".pdf" class="file-input">
+                </label>
+            </div>
+
+            <div class="horizontal">
+                <div class="input-group">
+                    <label for="questionCount">Počet otázek</label>
+                    <input type="number" id="questionCount" min="1" max="20" value="10">
+                </div>
+                <div class="selector-group">
+                    <span class="selector-label" style="text-align: end;">Jazyk kvízu</span>
+                    <div class="selector-buttons">
+                        <button class="selector-btn" data-language="user">Čeština</button>
+                        <button class="selector-btn selected" data-language="file">Jazyk souboru</button>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="generateQuiz()" class="btn" id="generateQuizBtn">Generovat Kvíz</button>
+        </div>
+
+        <div id="quizPage" class="multi-page-container">
+            <h1>Kvíz</h1>
+            <div id="quizQuestions"></div>
+            <button onclick="submitQuiz()" class="btn">Odevzdat Kvíz</button>
+        </div>
+
+        <div id="resultPage" class="multi-page-container">
+            <h1>Výsledky Kvízu</h1>
+            <div id="quizResults"></div>
+            <button onclick="showPage('fileUploadPage')" class="btn">Vytvořit další kvíz</button>
+        </div>
+    </div>
+</body>
+
+</html>
