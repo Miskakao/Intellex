@@ -1,6 +1,5 @@
 # TODO
 - add hints
-- add timer
 - add file local storage (using only the text from the file)
 - make background better for touchscreen devices
 - fix sizes of input elements
