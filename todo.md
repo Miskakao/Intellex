@@ -3,6 +3,8 @@
 - add file local storage (using only the text from the file)
 - add mobile phone support
 - add file history (and non repetetive questions)
+- add retry on 429 error (too many requests)
+- add review (questions with score < 0.5)
 - make background better for touchscreen devices
 - fix sizes of input elements
 - fix translucent elements (ei. modals) not being transaprent
